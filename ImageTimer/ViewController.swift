@@ -26,6 +26,8 @@ class ViewController: UIViewController {
     ]
     
     var imageIndex: Int = 0
+    var timer: Timer?
+    let timeInterval : TimeInterval = 10.0 // 10saniye
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +42,7 @@ class ViewController: UIViewController {
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(imageCliclk))
         imageView.addGestureRecognizer(tapRecognizer)
        
+        startTimer()
       
     }
 
@@ -61,6 +64,20 @@ class ViewController: UIViewController {
             imageText.text = "Bulunamadı";
         }
         
+        resetTimer()
+        
+    }
+    
+    func startTimer(){
+        timer = Timer.scheduledTimer(timeInterval: timeInterval, target: self, selector: #selector(timerFinished), userInfo: nil, repeats: false)
+    }
+    
+    func resetTimer(){
+        timer?.invalidate()
+        startTimer()
+    }
+    @objc func timerFinished(){
+        imageCliclk()
         
     }
 }
